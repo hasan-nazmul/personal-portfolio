@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nazmul Hasan: The Cosmic Coder</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/images/my-watermark.jpg">
+</head>
+<body class="bg-gray-900 text-gray-100 overflow-x-hidden font-mono">
+
+    <div id="hero" class="relative w-screen h-screen flex flex-col items-center justify-center text-center p-4">
+        <canvas id="starfield" class="absolute inset-0 z-0"></canvas>
+        <div class="z-10 relative space-y-6">
+            <img src="assets/images/my watermark.jpg" alt="Nazmul Hasan as The Code Commander" class="w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-yellow-400 mx-auto shadow-lg transform transition-transform duration-500 hover:scale-105">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight glitch" data-text="NAZMUL HASAN">NAZMUL HASAN</h1>
+            <p class="text-xl md:text-3xl font-bold text-yellow-400 comic-bubble">The Cosmic Coder: Champion of the Digital Verse</p>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6 mt-6">
+                <a href="https://www.linkedin.com/in/nazmul-hasan-1329511aa" target="_blank" class="comic-btn">LinkedIn</a>
+                <a href="https://github.com/hasan-nazmul" target="_blank" class="comic-btn">GitHub</a>
+                <a href="https://www.youtube.com/@1bit2infinity85" class="comic-btn" target="_blank">YouTube</a>
+                <a href="#contact" class="comic-btn pulse">Begin Transmission</a>
+            </div>
+            <a href="assets/Nazmul Hasan's Resume.pdf" download class="comic-btn-download mt-4">
+                <span class="comic-download-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                </span>
+                Download My Codex
+            </a>
+        </div>
+    </div>
+
+    <nav class="sticky top-0 z-50 bg-gray-800 bg-opacity-80 backdrop-filter backdrop-blur-lg shadow-xl p-4 md:p-6 transition-all duration-300 transform -translate-y-full opacity-0" id="navbar">
+        <ul class="flex flex-wrap justify-center space-x-4 sm:space-x-8 text-sm md:text-base font-bold">
+            <li><a href="#about" class="hover:text-yellow-400 transition duration-300">Origin Story</a></li>
+            <li><a href="#skills" class="hover:text-yellow-400 transition duration-300">The Arsenal</a></li>
+            <li><a href="#projects" class="hover:text-yellow-400 transition duration-300">Mission Log</a></li>
+            <li><a href="#experience" class="hover:text-yellow-400 transition duration-300">High Command</a></li>
+            <li><a href="#achievements" class="hover:text-yellow-400 transition duration-300">Hall of Triumphs</a></li>
+            <li><a href="#contact" class="hover:text-yellow-400 transition duration-300">Transmission Hub</a></li>
+        </ul>
+    </nav>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="about" class="my-20">
+            <div class="section-title">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">Origin Story: The Making of a Coder</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 items-center bg-gray-800 p-6 md:p-10 rounded-xl shadow-2xl border border-yellow-400 relative">
+                <div class="relative comic-panel">
+                    <p class="text-lg md:text-xl leading-relaxed text-gray-300 z-10">
+                        Greetings, traveler! I am Nazmul Hasan, a Computer Science and Engineering student from the International Islamic University Chittagong. My story isn't about born heroes; it's about a relentless pursuit of knowledge and a deep-seated love for the digital universe. From a young age, I was fascinated by how a few lines of code could create entire worlds, solve complex puzzles, and build things never before imagined.
+                        <br><br>
+                        This journey has been a thrilling one—filled with epic battles in coding contests and collaborative quests with my fellow adventurers. My path has been guided by mentors and fueled by a passion for creating, whether it's building games, training AIs, or simply solving a tough problem. This portfolio is a chronicle of my adventures, my missions, and the superpowers I've gained along the way.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 grid-rows-2 gap-4 comic-page-grid">
+                    <div class="comic-panel-image row-span-2">
+                        <img src="assets/images/ContestAU-23RankList.jpg" alt="Champion at Programming Contest" class="rounded-lg shadow-lg border-2 border-yellow-400 transform transition-transform duration-300 hover:scale-105">
+                        <span class="comic-caption">Mission Accomplished!</span>
+                    </div>
+                    <div class="comic-panel-image">
+                        <img src="assets/images/TeamContestSP-23 (3).jpg" alt="Team Contest winners" class="rounded-lg shadow-lg border-2 border-yellow-400 transform transition-transform duration-300 hover:scale-105">
+                        <span class="comic-caption">The Team-Up!</span>
+                    </div>
+                    <div class="comic-panel-image">
+                        <img src="assets/images/JamilSir'sComplement.png" alt="Teacher's Compliment" class="rounded-lg shadow-lg border-2 border-yellow-400 transform transition-transform duration-300 hover:scale-105">
+                        <span class="comic-caption">Commendations from the High Council.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="my-20">
+            <div class="section-title">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">The Arsenal: My Superpowers</h2>
+            </div>
+            <div class="bg-gray-800 p-6 md:p-10 rounded-xl shadow-2xl border border-yellow-400">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="p-6 bg-gray-700 rounded-lg shadow-inner border border-gray-600 comic-style">
+                        <h3 class="text-2xl font-bold text-white mb-4">Linguistic Matrix</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-300">
+                            <li>Python</li>
+                            <li>C / C++</li>
+                            <li>JavaScript</li>
+                            <li>HTML / CSS</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 bg-gray-700 rounded-lg shadow-inner border border-gray-600 comic-style">
+                        <h3 class="text-2xl font-bold text-white mb-4">Power-Ups & Gadgets</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-300">
+                            <li>Django</li>
+                            <li>Bootstrap</li>
+                            <li>OOP</li>
+                            <li>Apps Script</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 bg-gray-700 rounded-lg shadow-inner border border-gray-600 comic-style">
+                        <h3 class="text-2xl font-bold text-white mb-4">Specializations</h3>
+                        <ul class="list-disc list-inside space-y-2 text-gray-300">
+                            <li>Competitive Programming</li>
+                            <li>Game Development</li>
+                            <li>Machine Learning</li>
+                            <li>Creative Writing</li>
+                            <li>Mentoring</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="my-20">
+            <div class="section-title">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">Mission Log: My Galactic Quests</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl border border-yellow-400 transform transition-transform duration-300 hover:scale-105 comic-panel">
+                    <h3 class="text-2xl font-bold text-white mb-2">The Classroom Console</h3>
+                    <p class="text-sm text-yellow-400 mb-4">Django, Bootstrap, Redis</p>
+                    <p class="text-gray-300">A Google Classroom-like app with a secret weapon: an examination system currently in development. It's a digital fortress for education.</p>
+                </div>
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl border border-yellow-400 transform transition-transform duration-300 hover:scale-105 comic-panel">
+                    <h3 class="text-2xl font-bold text-white mb-2">The Rail-Nexus</h3>
+                    <p class="text-sm text-yellow-400 mb-4">Django, Bootstrap, ML</p>
+                    <p class="text-gray-300">A basic CRUD app with a twist—it can predict load for a railway system, a true feat of engineering and foresight.</p>
+                </div>
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl border border-yellow-400 transform transition-transform duration-300 hover:scale-105 comic-panel">
+                    <h3 class="text-2xl font-bold text-white mb-2">Galactic Market Analyzer</h3>
+                    <p class="text-sm text-yellow-400 mb-4">Scikit-learn, Matplotlib, Pandas</p>
+                    <p class="text-gray-300">My first foray into the unknown territories of Machine Learning. It's a cosmic crystal ball for predicting car prices.</p>
+                </div>
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl border border-yellow-400 transform transition-transform duration-300 hover:scale-105 comic-panel">
+                    <h3 class="text-2xl font-bold text-white mb-2">The Serpent Protocol</h3>
+                    <p class="text-sm text-yellow-400 mb-4">C++, Data Structures</p>
+                    <p class="text-gray-300">A classic mission to re-create the legendary Snake game using the intricate data structures of C++. Every move is a calculated risk!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="my-20">
+            <div class="section-title">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">High Command: My Ranks & Deployments</h2>
+            </div>
+            <div class="bg-gray-800 p-6 md:p-10 rounded-xl shadow-2xl border border-yellow-400 relative">
+                <div class="space-y-8">
+                    <div class="flex flex-col md:flex-row items-start md:items-center">
+                        <div class="md:w-1/4">
+                            <span class="text-sm text-gray-400">08/2025 – Present</span>
+                        </div>
+                        <div class="md:w-3/4">
+                            <h3 class="text-2xl font-bold text-white">General Secretary</h3>
+                            <p class="text-gray-300">IIUC Competitive Programming Society | Autumn'25 | Chattogram, Bangladesh</p>
+                            <p class="text-sm text-gray-400 italic">Leading the charge in the competitive programming galaxy.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row items-start md:items-center">
+                        <div class="md:w-1/4">
+                            <span class="text-sm text-gray-400">01/2025 – 08/2025</span>
+                        </div>
+                        <div class="md:w-3/4">
+                            <h3 class="text-2xl font-bold text-white">Assistant General Secretary</h3>
+                            <p class="text-gray-300">IIUC Competitive Programming Society | Spring'25 | Chattogram, Bangladesh</p>
+                            <p class="text-sm text-gray-400 italic">Leading the charge in the competitive programming galaxy.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row items-start md:items-center">
+                        <div class="md:w-1/4">
+                            <span class="text-sm text-gray-400">01/2024 – Present</span>
+                        </div>
+                        <div class="md:w-3/4">
+                            <h3 class="text-2xl font-bold text-white">Undergraduate Teaching Assistant</h3>
+                            <p class="text-gray-300">Mr. Jamil Asad | Chattogram, Bangladesh</p>
+                            <p class="text-sm text-gray-400 italic">Guiding new recruits through the complexities of Computer Programming-I & Competitive Programming-2.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row items-start md:items-center">
+                        <div class="md:w-1/4">
+                            <span class="text-sm text-gray-400">08/2023 – 06/2024</span>
+                        </div>
+                        <div class="md:w-3/4">
+                            <h3 class="text-2xl font-bold text-white">Bootcamp Trainer & Mentor</h3>
+                            <p class="text-gray-300">IIUC Competitive Programming Society</p>
+                            <p class="text-sm text-gray-400 italic">Training the next generation of code commandos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="achievements" class="my-20">
+            <div class="section-title">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">Hall of Triumphs: Commendations & Medals</h2>
+            </div>
+            <div class="bg-gray-800 p-6 md:p-10 rounded-xl shadow-2xl border border-yellow-400 relative">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="flex items-center space-x-4 p-4 rounded-lg bg-gray-700 shadow-inner">
+                        <img src="assets/images/TeamContestSP-23 (3).jpg" alt="Medal winners group photo" class="w-24 h-24 rounded-full border-2 border-yellow-400">
+                        <div>
+                            <p class="text-lg font-bold text-white">Champion, Intra University Programming Contest</p>
+                            <p class="text-sm text-gray-400 italic">Autumn '23 & Spring '23 | IIUC Competitive Programming Society</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4 p-4 rounded-lg bg-gray-700 shadow-inner">
+                        <img src="assets/images/514326835_707253042068218_3619584995855240237_n.jpg" alt="Problem Setters" class="w-24 h-24 rounded-full border-2 border-yellow-400">
+                        <div>
+                            <p class="text-lg font-bold text-white">Problem Setter at Intra University Contest</p>
+                            <p class="text-sm text-gray-400 italic">Spring '23 & Team Spring '23 | IIUC Competitive Programming Society</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4 p-4 rounded-lg bg-gray-700 shadow-inner">
+                        <div class="text-3xl text-yellow-400 flex-shrink-0">🏆</div>
+                        <div>
+                            <p class="text-lg font-bold text-white">First Runner-Up, Intra University Programming Contest</p>
+                            <p class="text-sm text-gray-400 italic">Autumn '22 | IIUC Competitive Programming Society</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4 p-4 rounded-lg bg-gray-700 shadow-inner">
+                        <div class="text-3xl text-yellow-400 flex-shrink-0">🌟</div>
+                        <div>
+                            <p class="text-lg font-bold text-white">Became a Pupil on Codeforces</p>
+                            <p class="text-sm text-gray-400 italic">A crucial milestone in the journey of a competitive coder.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-8">
+                    <p class="text-lg text-white">And many more missions completed, with more to come in shaa Allah!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="interests" class="my-20">
+            <div class="section-title">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">Beyond the Code: My Side Quests</h2>
+            </div>
+            <div class="bg-gray-800 p-6 md:p-10 rounded-xl shadow-2xl border border-yellow-400 relative comic-panel-grid">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="p-4 rounded-lg bg-gray-700 shadow-inner text-center comic-interest-panel">
+                        <h3 class="text-xl font-bold text-white mb-2">Star Gazing</h3>
+                        <p class="text-gray-300">Contemplating the cosmos to find inspiration in the patterns of the universe.</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-gray-700 shadow-inner text-center comic-interest-panel">
+                        <h3 class="text-xl font-bold text-white mb-2">Video Editing</h3>
+                        <p class="text-gray-300">Crafting cinematic stories with every cut and transition, just like a compiler.</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-gray-700 shadow-inner text-center comic-interest-panel">
+                        <h3 class="text-xl font-bold text-white mb-2">Creative Writing</h3>
+                        <p class="text-gray-300">Building new worlds with words, a parallel passion to building worlds with code.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="my-20">
+            <div class="section-title">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">Transmission Hub: Connect with Me</h2>
+            </div>
+            <div class="bg-gray-800 p-6 md:p-10 rounded-xl shadow-2xl border border-yellow-400 relative">
+                <p class="text-center text-lg text-gray-300 mb-6">Need a Code Commander for your next mission? Send me a transmission!</p>
+                <form action="https://formspree.io/f/mqalvqwq" method="POST" class="space-y-4">
+                    <input type="text" name="name" placeholder="Your Galactic Name" required class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300">
+                    <input type="email" name="email" placeholder="Your Space-Mail Address" required class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300">
+                    <textarea name="message" placeholder="Your Message for the Code Commander" rows="5" required class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300"></textarea>
+                    <button type="submit" class="w-full p-3 font-bold text-white bg-yellow-400 rounded-lg shadow-md hover:bg-yellow-500 transition duration-300 main-btn">Send Transmission</button>
+                </form>
+                <div class="flex flex-col sm:flex-row justify-center items-center mt-8 space-y-4 sm:space-y-0 sm:space-x-8">
+                    <div class="flex items-center space-x-2 text-gray-300">
+                        <span class="text-yellow-400">📧</span>
+                        <span>nh2826230@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-gray-500 text-center p-4 text-sm mt-10">
+        <p>&copy; 2025 Nazmul Hasan. All rights reserved. <br> Crafted with the power of code and cosmic inspiration.</p>
+        <div class="mt-2">
+            <img src="assets/images/my-watermark.jpg" alt="IIUCCPS Watermark" class="w-10 h-10 mx-auto opacity-70">
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
