@@ -1,289 +1,411 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nazmul Hasan: The Cosmic Coder</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="assets/images/my-watermark.jpg">
+    <title>Nazmul Hasan | The Architect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --void: #050403;
+            --sand: #c2b280;
+            --spice: #ff7b00;
+            --gold: #d4af37;
+            --rock: #1a1614;
+            --font-royal: 'Cinzel', serif;
+            --font-data: 'Space Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--void);
+            color: var(--sand);
+            font-family: var(--font-data);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        #bg-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1;
+        }
+
+        .noise {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.05; pointer-events: none; z-index: 10;
+        }
+
+        main {
+            max-width: 1100px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2;
+        }
+
+        section {
+            min-height: 90vh; display: flex; flex-direction: column; justify-content: center;
+            padding: 4rem 0; border-left: 1px solid rgba(212, 175, 55, 0.1); padding-left: 3rem;
+        }
+
+        h1, h2, h3, h4 { 
+            font-family: var(--font-royal); text-transform: uppercase; letter-spacing: 2px; font-weight: 700;
+        }
+        
+        h1 {
+            font-size: clamp(3rem, 6vw, 5rem); color: var(--gold);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3); margin-bottom: 0.5rem;
+            min-height: 1.2em; /* Prevents layout shift during scramble */
+        }
+
+        .subtitle { font-size: 1.2rem; color: var(--spice); margin-bottom: 2rem; font-style: italic; }
+
+        .section-header {
+            font-size: 2.5rem; color: var(--sand); border-bottom: 1px solid var(--gold);
+            display: inline-block; margin-bottom: 3rem; padding-bottom: 10px;
+        }
+
+        /* --- ANIMATION: SCROLL REVEAL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.19, 1, 0.22, 1); /* "Ease Out Expo" for heavy mechanical feel */
+            filter: blur(10px);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        /* CARD STYLING & ANIMATION */
+        .card {
+            background: rgba(26, 22, 20, 0.7);
+            border: 1px solid rgba(194, 178, 128, 0.2);
+            padding: 2rem;
+            position: relative;
+            backdrop-filter: blur(5px);
+            overflow: hidden; /* For the sheen effect */
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* The Gold Corner */
+        .card::after { 
+            content: ''; position: absolute; top: 0; right: 0; width: 0; height: 0;
+            border-style: solid; border-width: 0 20px 20px 0;
+            border-color: transparent var(--gold) transparent transparent; opacity: 0.5;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--spice);
+            box-shadow: 0 10px 30px -10px rgba(255, 123, 0, 0.2);
+        }
+
+        /* Scanning Laser Effect on Hover */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+        }
+        .card:hover::before { left: 150%; transition: 0.7s; }
+
+        /* SERVICE GRID */
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+        .service-card {
+            background: linear-gradient(145deg, var(--rock), #0f0c0b);
+            border: 1px solid var(--gold); padding: 2rem; text-align: center;
+            transition: 0.3s;
+        }
+        .service-card:hover { background: #1f1a18; }
+        .service-icon { font-size: 2rem; color: var(--spice); margin-bottom: 1rem; display: block; }
+
+        /* TIMELINE */
+        .timeline-item { position: relative; padding-left: 2rem; margin-bottom: 2.5rem; border-left: 2px solid var(--spice); }
+        .timeline-item::before {
+            content: '◆'; position: absolute; left: -9px; top: 0; color: var(--gold); background: var(--void);
+            transition: 0.3s;
+        }
+        .timeline-item:hover::before { color: var(--spice); transform: scale(1.5) rotate(45deg); }
+
+        /* SKILLS */
+        .skill-cloud { display: flex; flex-wrap: wrap; gap: 10px; }
+        .skill-tag {
+            border: 1px solid var(--sand); padding: 5px 15px; font-size: 0.8rem; color: var(--sand); transition: 0.3s;
+        }
+        .skill-tag:hover {
+            background: var(--spice); color: var(--void); border-color: var(--spice);
+            box-shadow: 0 0 15px var(--spice);
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-block; padding: 12px 30px; border: 1px solid var(--gold);
+            color: var(--gold); text-decoration: none; text-transform: uppercase; letter-spacing: 2px;
+            font-family: var(--font-royal); font-weight: bold; transition: 0.3s; margin-right: 15px; margin-top: 15px;
+            position: relative; overflow: hidden;
+        }
+        
+        /* Button Fill Animation */
+        .btn::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 0%; height: 100%;
+            background: var(--gold); z-index: -1; transition: 0.3s ease-in-out;
+        }
+        .btn:hover { color: var(--void); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+        .btn:hover::after { width: 100%; }
+
+        .highlight { color: var(--gold); font-weight: bold; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            section { padding-left: 0; border: none; }
+        }
+    </style>
 </head>
-<body class="bg-gray-900 text-gray-100 overflow-x-hidden font-mono">
+<body>
 
-    <div id="hero" class="relative w-screen h-screen flex flex-col items-center justify-center text-center p-4">
-        <canvas id="starfield" class="absolute inset-0 z-0"></canvas>
-        <div class="z-10 relative space-y-6">
-            <img src="assets/images/my watermark.jpg" alt="Nazmul Hasan as The Code Commander" class="w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-yellow-400 mx-auto shadow-lg transform transition-transform duration-500 hover:scale-105">
-            <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight glitch" data-text="NAZMUL HASAN">NAZMUL HASAN</h1>
-            <p class="text-xl md:text-3xl font-bold text-yellow-400 comic-bubble">The Cosmic Coder: Champion of the Digital Verse</p>
-            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6 mt-6">
-                <a href="https://www.linkedin.com/in/nazmul-hasan-1329511aa" target="_blank" class="comic-btn">LinkedIn</a>
-                <a href="https://github.com/hasan-nazmul" target="_blank" class="comic-btn">GitHub</a>
-                <a href="https://www.youtube.com/@1bit2infinity85" class="comic-btn" target="_blank">YouTube</a>
-                <a href="#contact" class="comic-btn pulse">Begin Transmission</a>
+    <canvas id="bg-canvas"></canvas>
+    <div class="noise"></div>
+
+    <main>
+        <!-- HERO -->
+        <section id="hero">
+            <p class="reveal" style="color: var(--spice); letter-spacing: 3px;">// INCOMING TRANSMISSION...</p>
+            <!-- The ID 'scramble-text' is used by JS for the decoding effect -->
+            <h1 id="scramble-text">NAZMUL HASAN</h1>
+            <h2 class="subtitle reveal" style="transition-delay: 0.2s;">Architect. Algorithmist. 2x ICPC Regionalist.</h2>
+            
+            <div class="reveal" style="max-width: 600px; border-left: 3px solid var(--gold); padding-left: 20px; margin-bottom: 2rem; transition-delay: 0.4s;">
+                <p>Welcome to the archives. I am a Computer Science undergraduate crafting digital empires from Chattogram. My logic is absolute, my code is clean, and I am ready to serve.</p>
             </div>
-            <a href="assets/Nazmul Hasan's Resume.pdf" download class="comic-btn-download mt-4">
-                <span class="comic-download-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                </span>
-                Download My Codex
-            </a>
-        </div>
-    </div>
 
-    <nav class="sticky top-0 z-50 bg-gray-800 bg-opacity-80 backdrop-filter backdrop-blur-lg shadow-xl p-4 md:p-6 transition-all duration-300 transform -translate-y-full opacity-0" id="navbar">
-        <ul class="flex flex-wrap justify-center space-x-4 sm:space-x-8 text-sm md:text-base font-bold">
-            <li><a href="#about" class="hover:text-yellow-400 transition duration-300">Origin Story</a></li>
-            <li><a href="#skills" class="hover:text-yellow-400 transition duration-300">The Arsenal</a></li>
-            <li><a href="#projects" class="hover:text-yellow-400 transition duration-300">Mission Log</a></li>
-            <li><a href="#experience" class="hover:text-yellow-400 transition duration-300">High Command</a></li>
-            <li><a href="#achievements" class="hover:text-yellow-400 transition duration-300">Hall of Triumphs</a></li>
-            <li><a href="#contact" class="hover:text-yellow-400 transition duration-300">Transmission Hub</a></li>
-        </ul>
-    </nav>
-
-    <main class="container mx-auto p-4 md:p-8">
-
-        <section id="about" class="my-20">
-            <div class="section-title">
-                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">Origin Story: The Making of a Coder</h2>
+            <div class="reveal" style="transition-delay: 0.6s;">
+                <a href="#services" class="btn">Hire My Services</a>
+                <a href="#projects" class="btn" style="border-color: var(--sand); color: var(--sand);">View Archives</a>
             </div>
-            <div class="grid md:grid-cols-2 gap-8 items-center bg-gray-800 p-6 md:p-10 rounded-xl shadow-2xl border border-yellow-400 relative">
-                <div class="relative comic-panel">
-                    <p class="text-lg md:text-xl leading-relaxed text-gray-300 z-10">
-                        Greetings, traveler! I am Nazmul Hasan, a Computer Science and Engineering student from the International Islamic University Chittagong. My story isn't about born heroes; it's about a relentless pursuit of knowledge and a deep-seated love for the digital universe. From a young age, I was fascinated by how a few lines of code could create entire worlds, solve complex puzzles, and build things never before imagined.
-                        <br><br>
-                        This journey has been a thrilling one—filled with epic battles in coding contests and collaborative quests with my fellow adventurers. My path has been guided by mentors and fueled by a passion for creating, whether it's building games, training AIs, or simply solving a tough problem. This portfolio is a chronicle of my adventures, my missions, and the superpowers I've gained along the way.
-                    </p>
+        </section>
+
+        <!-- SERVICES -->
+        <section id="services">
+            <h2 class="section-header reveal">Guild Services</h2>
+            <div class="service-grid">
+                <div class="service-card reveal" style="transition-delay: 0.1s;">
+                    <span class="service-icon">❖</span>
+                    <h3>Management Systems</h3>
+                    <p style="font-size: 0.9rem; margin-top: 10px; color: #aaa;">Full-stack internal software. Automated workflows, employee tracking, and inventory logic.</p>
+                    <p class="highlight" style="font-size: 0.8rem; margin-top: 10px;">[Django / SQL / Automation]</p>
                 </div>
-                <div class="grid grid-cols-2 grid-rows-2 gap-4 comic-page-grid">
-                    <div class="comic-panel-image row-span-2">
-                        <img src="assets/images/ContestAU-23RankList.jpg" alt="Champion at Programming Contest" class="rounded-lg shadow-lg border-2 border-yellow-400 transform transition-transform duration-300 hover:scale-105">
-                        <span class="comic-caption">Mission Accomplished!</span>
-                    </div>
-                    <div class="comic-panel-image">
-                        <img src="assets/images/TeamContestSP-23 (3).jpg" alt="Team Contest winners" class="rounded-lg shadow-lg border-2 border-yellow-400 transform transition-transform duration-300 hover:scale-105">
-                        <span class="comic-caption">The Team-Up!</span>
-                    </div>
-                    <div class="comic-panel-image">
-                        <img src="assets/images/JamilSir'sComplement.png" alt="Teacher's Compliment" class="rounded-lg shadow-lg border-2 border-yellow-400 transform transition-transform duration-300 hover:scale-105">
-                        <span class="comic-caption">Commendations from the High Council.</span>
-                    </div>
+                <div class="service-card reveal" style="transition-delay: 0.2s;">
+                    <span class="service-icon">⚡</span>
+                    <h3>SaaS Development</h3>
+                    <p style="font-size: 0.9rem; margin-top: 10px; color: #aaa;">Scalable software solutions. From MVP to production.</p>
+                    <p class="highlight" style="font-size: 0.8rem; margin-top: 10px;">[Python / APIs / Secure]</p>
+                </div>
+                <div class="service-card reveal" style="transition-delay: 0.3s;">
+                    <span class="service-icon">◆</span>
+                    <h3>Static Architecture</h3>
+                    <p style="font-size: 0.9rem; margin-top: 10px; color: #aaa;">High-performance portfolio and landing websites.</p>
+                    <p class="highlight" style="font-size: 0.8rem; margin-top: 10px;">[JS / Three.js / HTML5]</p>
+                </div>
+            </div>
+            <div class="reveal" style="text-align: center;">
+                <a href="mailto:nh2826239@gmail.com" class="btn">Initiate Contract Discussion</a>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about">
+            <h2 class="section-header reveal">The Mentat Profile</h2>
+            <div class="grid">
+                <div class="card reveal">
+                    <h3>Core Logic</h3>
+                    <p style="margin-top: 1rem;"><strong>B.Sc. in CSE</strong> <br> International Islamic University Chittagong <br> <span style="color: #666;">[2022 - Present]</span></p>
+                    <p style="margin-top: 1rem;">My mind is trained in algorithmic complexities. I do not just write code; I structure logic.</p>
+                </div>
+                <div class="card reveal" style="border-color: var(--spice); transition-delay: 0.2s;">
+                    <h3 style="color: var(--spice);">Imperial Commendations</h3>
+                    <ul style="list-style: none; margin-top: 1rem; font-size: 0.95rem;">
+                        <li style="margin-bottom: 10px;">★ <strong>2x ICPC Dhaka Regionalist:</strong> Ranked 104th/309 teams.</li>
+                        <li style="margin-bottom: 10px;">★ <strong>Organizer:</strong> IIUC IUPC 2023.</li>
+                        <li style="margin-bottom: 10px;">★ <strong>Max Rank:</strong> Pupil @ Codeforces.</li>
+                        <li>★ <strong>Award:</strong> Best Mentor (July 2025).</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <section id="skills" class="my-20">
-            <div class="section-title">
-                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">The Arsenal: My Superpowers</h2>
-            </div>
-            <div class="bg-gray-800 p-6 md:p-10 rounded-xl shadow-2xl border border-yellow-400">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="p-6 bg-gray-700 rounded-lg shadow-inner border border-gray-600 comic-style">
-                        <h3 class="text-2xl font-bold text-white mb-4">Linguistic Matrix</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-300">
-                            <li>Python</li>
-                            <li>C / C++</li>
-                            <li>JavaScript</li>
-                            <li>HTML / CSS</li>
-                        </ul>
-                    </div>
-                    <div class="p-6 bg-gray-700 rounded-lg shadow-inner border border-gray-600 comic-style">
-                        <h3 class="text-2xl font-bold text-white mb-4">Power-Ups & Gadgets</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-300">
-                            <li>Django</li>
-                            <li>Bootstrap</li>
-                            <li>OOP</li>
-                            <li>Apps Script</li>
-                        </ul>
-                    </div>
-                    <div class="p-6 bg-gray-700 rounded-lg shadow-inner border border-gray-600 comic-style">
-                        <h3 class="text-2xl font-bold text-white mb-4">Specializations</h3>
-                        <ul class="list-disc list-inside space-y-2 text-gray-300">
-                            <li>Competitive Programming</li>
-                            <li>Game Development</li>
-                            <li>Machine Learning</li>
-                            <li>Creative Writing</li>
-                            <li>Mentoring</li>
-                        </ul>
-                    </div>
-                </div>
+        <!-- SKILLS -->
+        <section id="skills">
+            <h2 class="section-header reveal">Weapons & Tools</h2>
+            <div class="skill-cloud reveal">
+                <span class="skill-tag">Competitive Programming</span>
+                <span class="skill-tag">Django Framework</span>
+                <span class="skill-tag">C++ (Mastery)</span>
+                <span class="skill-tag">Python Scripting</span>
+                <span class="skill-tag">Machine Learning</span>
+                <span class="skill-tag">Web Crawling</span>
+                <span class="skill-tag">System Architecture</span>
+                <span class="skill-tag">Mentoring</span>
             </div>
         </section>
 
-        <section id="projects" class="my-20">
-            <div class="section-title">
-                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">Mission Log: My Galactic Quests</h2>
+        <!-- EXPERIENCE -->
+        <section id="experience">
+            <h2 class="section-header reveal">Chronicle of Battles</h2>
+            <div class="timeline-item reveal">
+                <h3>General Secretary</h3>
+                <p class="highlight">IIUC Competitive Programming Society | 08/2025 - Present</p>
+                <p>Commanding the society. Training the next generation.</p>
             </div>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl border border-yellow-400 transform transition-transform duration-300 hover:scale-105 comic-panel">
-                    <h3 class="text-2xl font-bold text-white mb-2">The Classroom Console</h3>
-                    <p class="text-sm text-yellow-400 mb-4">Django, Bootstrap, Redis</p>
-                    <p class="text-gray-300">A Google Classroom-like app with a secret weapon: an examination system currently in development. It's a digital fortress for education.</p>
-                </div>
-                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl border border-yellow-400 transform transition-transform duration-300 hover:scale-105 comic-panel">
-                    <h3 class="text-2xl font-bold text-white mb-2">The Rail-Nexus</h3>
-                    <p class="text-sm text-yellow-400 mb-4">Django, Bootstrap, ML</p>
-                    <p class="text-gray-300">A basic CRUD app with a twist—it can predict load for a railway system, a true feat of engineering and foresight.</p>
-                </div>
-                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl border border-yellow-400 transform transition-transform duration-300 hover:scale-105 comic-panel">
-                    <h3 class="text-2xl font-bold text-white mb-2">Galactic Market Analyzer</h3>
-                    <p class="text-sm text-yellow-400 mb-4">Scikit-learn, Matplotlib, Pandas</p>
-                    <p class="text-gray-300">My first foray into the unknown territories of Machine Learning. It's a cosmic crystal ball for predicting car prices.</p>
-                </div>
-                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl border border-yellow-400 transform transition-transform duration-300 hover:scale-105 comic-panel">
-                    <h3 class="text-2xl font-bold text-white mb-2">The Serpent Protocol</h3>
-                    <p class="text-sm text-yellow-400 mb-4">C++, Data Structures</p>
-                    <p class="text-gray-300">A classic mission to re-create the legendary Snake game using the intricate data structures of C++. Every move is a calculated risk!</p>
-                </div>
+            <div class="timeline-item reveal">
+                <h3>Undergraduate Teaching Assistant</h3>
+                <p class="highlight">Govt. Railway ICT Program | 10/2024 - 11/2024</p>
+                <p>Selected to train government officers in C, Java, Python, and Machine Learning.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <h3>Undergraduate Teaching Assistant</h3>
+                <p class="highlight">CSE Dept (IIUC) | 01/2024 - Present</p>
+                <p>Guiding initiates in Computer Programming 1 & 2.</p>
             </div>
         </section>
 
-        <section id="experience" class="my-20">
-            <div class="section-title">
-                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">High Command: My Ranks & Deployments</h2>
-            </div>
-            <div class="bg-gray-800 p-6 md:p-10 rounded-xl shadow-2xl border border-yellow-400 relative">
-                <div class="space-y-8">
-                    <div class="flex flex-col md:flex-row items-start md:items-center">
-                        <div class="md:w-1/4">
-                            <span class="text-sm text-gray-400">08/2025 – Present</span>
-                        </div>
-                        <div class="md:w-3/4">
-                            <h3 class="text-2xl font-bold text-white">General Secretary</h3>
-                            <p class="text-gray-300">IIUC Competitive Programming Society | Autumn'25 | Chattogram, Bangladesh</p>
-                            <p class="text-sm text-gray-400 italic">Leading the charge in the competitive programming galaxy.</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col md:flex-row items-start md:items-center">
-                        <div class="md:w-1/4">
-                            <span class="text-sm text-gray-400">01/2025 – 08/2025</span>
-                        </div>
-                        <div class="md:w-3/4">
-                            <h3 class="text-2xl font-bold text-white">Assistant General Secretary</h3>
-                            <p class="text-gray-300">IIUC Competitive Programming Society | Spring'25 | Chattogram, Bangladesh</p>
-                            <p class="text-sm text-gray-400 italic">Leading the charge in the competitive programming galaxy.</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col md:flex-row items-start md:items-center">
-                        <div class="md:w-1/4">
-                            <span class="text-sm text-gray-400">01/2024 – Present</span>
-                        </div>
-                        <div class="md:w-3/4">
-                            <h3 class="text-2xl font-bold text-white">Undergraduate Teaching Assistant</h3>
-                            <p class="text-gray-300">Mr. Jamil Asad | Chattogram, Bangladesh</p>
-                            <p class="text-sm text-gray-400 italic">Guiding new recruits through the complexities of Computer Programming-I & Competitive Programming-2.</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col md:flex-row items-start md:items-center">
-                        <div class="md:w-1/4">
-                            <span class="text-sm text-gray-400">08/2023 – 06/2024</span>
-                        </div>
-                        <div class="md:w-3/4">
-                            <h3 class="text-2xl font-bold text-white">Bootcamp Trainer & Mentor</h3>
-                            <p class="text-gray-300">IIUC Competitive Programming Society</p>
-                            <p class="text-sm text-gray-400 italic">Training the next generation of code commandos.</p>
-                        </div>
-                    </div>
+        <!-- PROJECTS -->
+        <section id="projects">
+            <h2 class="section-header reveal">The Golden Path</h2>
+            <div class="reveal" style="border: 1px solid var(--gold); padding: 2rem; margin-bottom: 3rem; background: rgba(212, 175, 55, 0.05);">
+                <h3 style="color: var(--gold);">EXECUTED COMMERCIAL CONTRACTS</h3>
+                <div class="grid" style="margin-top: 1.5rem;">
+                    <div><h4>Company Management System</h4><p style="font-size: 0.9rem;">Engineered a complete management suite for a corporate client.</p></div>
+                    <div><h4>Trading Portal</h4><p style="font-size: 0.9rem;">Live trading website with secure data presentation.</p></div>
                 </div>
+            </div>
+            <div class="grid">
+                <div class="card reveal"><h4>Classmate</h4><p class="highlight">[Django + Redis]</p><p>Classroom management ecosystem.</p></div>
+                <div class="card reveal" style="transition-delay: 0.1s;"><h4>Railway System Handler</h4><p class="highlight">[ML + Django]</p><p>Load prediction systems.</p></div>
+                <div class="card reveal" style="transition-delay: 0.2s;"><h4>IIUCCPS Ladder</h4><p class="highlight">[Curriculum]</p><p>Difficulty ladder (800-1400).</p></div>
             </div>
         </section>
 
-        <section id="achievements" class="my-20">
-            <div class="section-title">
-                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">Hall of Triumphs: Commendations & Medals</h2>
-            </div>
-            <div class="bg-gray-800 p-6 md:p-10 rounded-xl shadow-2xl border border-yellow-400 relative">
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="flex items-center space-x-4 p-4 rounded-lg bg-gray-700 shadow-inner">
-                        <img src="assets/images/TeamContestSP-23 (3).jpg" alt="Medal winners group photo" class="w-24 h-24 rounded-full border-2 border-yellow-400">
-                        <div>
-                            <p class="text-lg font-bold text-white">Champion, Intra University Programming Contest</p>
-                            <p class="text-sm text-gray-400 italic">Autumn '23 & Spring '23 | IIUC Competitive Programming Society</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-4 p-4 rounded-lg bg-gray-700 shadow-inner">
-                        <img src="assets/images/514326835_707253042068218_3619584995855240237_n.jpg" alt="Problem Setters" class="w-24 h-24 rounded-full border-2 border-yellow-400">
-                        <div>
-                            <p class="text-lg font-bold text-white">Problem Setter at Intra University Contest</p>
-                            <p class="text-sm text-gray-400 italic">Spring '23 & Team Spring '23 | IIUC Competitive Programming Society</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-4 p-4 rounded-lg bg-gray-700 shadow-inner">
-                        <div class="text-3xl text-yellow-400 flex-shrink-0">🏆</div>
-                        <div>
-                            <p class="text-lg font-bold text-white">First Runner-Up, Intra University Programming Contest</p>
-                            <p class="text-sm text-gray-400 italic">Autumn '22 | IIUC Competitive Programming Society</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-4 p-4 rounded-lg bg-gray-700 shadow-inner">
-                        <div class="text-3xl text-yellow-400 flex-shrink-0">🌟</div>
-                        <div>
-                            <p class="text-lg font-bold text-white">Became a Pupil on Codeforces</p>
-                            <p class="text-sm text-gray-400 italic">A crucial milestone in the journey of a competitive coder.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center mt-8">
-                    <p class="text-lg text-white">And many more missions completed, with more to come in shaa Allah!</p>
-                </div>
+        <!-- CONTACT -->
+        <section id="contact" style="border: none; text-align: center;">
+            <h2 class="section-header reveal">Establish Uplink</h2>
+            <div class="reveal" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
+                <a href="mailto:nh2826239@gmail.com" class="btn">Email Comm</a>
+                <a href="https://github.com/hasan-nazmul" class="btn">GitHub</a>
+                <a href="https://linkedin.com/in/nazmul-hasan-1329511aa" class="btn">LinkedIn</a>
+                <a href="https://codeforces.com/profile/C201018_Nazmul" class="btn">Codeforces</a>
             </div>
         </section>
 
-        <section id="interests" class="my-20">
-            <div class="section-title">
-                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">Beyond the Code: My Side Quests</h2>
-            </div>
-            <div class="bg-gray-800 p-6 md:p-10 rounded-xl shadow-2xl border border-yellow-400 relative comic-panel-grid">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="p-4 rounded-lg bg-gray-700 shadow-inner text-center comic-interest-panel">
-                        <h3 class="text-xl font-bold text-white mb-2">Star Gazing</h3>
-                        <p class="text-gray-300">Contemplating the cosmos to find inspiration in the patterns of the universe.</p>
-                    </div>
-                    <div class="p-4 rounded-lg bg-gray-700 shadow-inner text-center comic-interest-panel">
-                        <h3 class="text-xl font-bold text-white mb-2">Video Editing</h3>
-                        <p class="text-gray-300">Crafting cinematic stories with every cut and transition, just like a compiler.</p>
-                    </div>
-                    <div class="p-4 rounded-lg bg-gray-700 shadow-inner text-center comic-interest-panel">
-                        <h3 class="text-xl font-bold text-white mb-2">Creative Writing</h3>
-                        <p class="text-gray-300">Building new worlds with words, a parallel passion to building worlds with code.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="my-20">
-            <div class="section-title">
-                <h2 class="text-3xl md:text-5xl font-extrabold text-yellow-400 mb-8 text-center comic-panel-title">Transmission Hub: Connect with Me</h2>
-            </div>
-            <div class="bg-gray-800 p-6 md:p-10 rounded-xl shadow-2xl border border-yellow-400 relative">
-                <p class="text-center text-lg text-gray-300 mb-6">Need a Code Commander for your next mission? Send me a transmission!</p>
-                <form action="https://formspree.io/f/mqalvqwq" method="POST" class="space-y-4">
-                    <input type="text" name="name" placeholder="Your Galactic Name" required class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300">
-                    <input type="email" name="email" placeholder="Your Space-Mail Address" required class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300">
-                    <textarea name="message" placeholder="Your Message for the Code Commander" rows="5" required class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition duration-300"></textarea>
-                    <button type="submit" class="w-full p-3 font-bold text-white bg-yellow-400 rounded-lg shadow-md hover:bg-yellow-500 transition duration-300 main-btn">Send Transmission</button>
-                </form>
-                <div class="flex flex-col sm:flex-row justify-center items-center mt-8 space-y-4 sm:space-y-0 sm:space-x-8">
-                    <div class="flex items-center space-x-2 text-gray-300">
-                        <span class="text-yellow-400">📧</span>
-                        <span>nh2826239@gmail.com</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <footer style="text-align: center; padding: 4rem 0; color: #555; font-size: 0.8rem;">
+            <p>DESIGNED BY NAZMUL HASAN // THE SPICE MUST FLOW</p>
+        </footer>
     </main>
 
-    <footer class="bg-gray-900 text-gray-500 text-center p-4 text-sm mt-10">
-        <p>&copy; 2025 Nazmul Hasan. All rights reserved. <br> Crafted with the power of code and cosmic inspiration.</p>
-        <div class="mt-2">
-            <img src="assets/images/my watermark.png" alt="IIUCCPS Watermark" class="w-10 h-10 mx-auto opacity-70">
-        </div>
-    </footer>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // --- 1. MENTAT DECRYPTION TEXT EFFECT ---
+        const scrambleElement = document.getElementById('scramble-text');
+        const originalText = scrambleElement.innerText;
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&";
+        let iterations = 0;
+
+        // Scramble animation on load
+        const interval = setInterval(() => {
+            scrambleElement.innerText = originalText
+                .split("")
+                .map((letter, index) => {
+                    if(index < iterations) return originalText[index];
+                    return chars[Math.floor(Math.random() * chars.length)];
+                })
+                .join("");
+
+            if(iterations >= originalText.length) clearInterval(interval);
+            iterations += 1/3; // Controls speed of decoding
+        }, 30);
+
+        // --- 2. SCROLL REVEAL OBSERVER ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 }); // Trigger when 10% visible
+
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        // --- 3. THREE.JS SPICE FIELD WITH WARP ---
+        const canvas = document.querySelector('#bg-canvas');
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x050403, 0.002);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1500;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 150;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.12,
+            color: 0xff7b00,
+            transparent: true,
+            opacity: 0.8,
+        });
+        const spiceField = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(spiceField);
+
+        camera.position.z = 40;
+
+        let mouseX = 0;
+        let mouseY = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX - window.innerWidth / 2) * 0.0005;
+            mouseY = (event.clientY - window.innerHeight / 2) * 0.0005;
+        });
+
+        // ANIMATION LOOP
+        const clock = new THREE.Clock();
+        
+        function animate() {
+            const elapsedTime = clock.getElapsedTime();
+            
+            // Calculate "Warp Speed" based on scroll position
+            // The further you scroll, the faster the spice flows
+            const warpFactor = 1 + (window.scrollY * 0.005); 
+
+            spiceField.rotation.y = elapsedTime * 0.02 * warpFactor;
+            
+            // Stretch particles slightly on fast scroll (visual trick)
+            spiceField.scale.z = 1 + (window.scrollY * 0.001);
+
+            // Gentle Camera Float
+            camera.position.x += (mouseX * 5 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY * 5 - camera.position.y) * 0.05;
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
